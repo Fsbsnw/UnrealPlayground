@@ -7,7 +7,7 @@
 
   [<ItemStructs.h>](Source/Lost/Public/Data/ItemStructs.h) 
 
-  * FItemBase -> 기본키 + 외래키 역할
+  * FItemBase(ItemName : 기본키 + 외래키 역할)
   <img width="700" height="138" alt="image" src="https://github.com/user-attachments/assets/efc41f88-e9d9-4231-9371-6b35de89edef" /><br>
 
   * FItemCraftData
