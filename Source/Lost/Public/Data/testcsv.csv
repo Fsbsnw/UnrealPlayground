@@ -1,0 +1,3 @@
+---,ItemName,ItemAmount,ItemIcon
+Stone,"Stone","0","/Script/Engine.Texture2D'/Engine/EngineResources/AICON-Green.AICON-Green'"
+Wood,"Wood","0","/Script/Engine.Texture2D'/Engine/EngineResources/AICON-Red.AICON-Red'"
