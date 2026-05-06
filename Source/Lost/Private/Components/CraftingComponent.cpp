@@ -11,25 +11,17 @@ UCraftingComponent::UCraftingComponent()
 	PrimaryComponentTick.bCanEverTick = false;
 }
 
-
-void UCraftingComponent::BeginPlay()
+void UCraftingComponent::RequestCraftItem(FName TargetName, UInventoryComponent* TargetInventory)
 {
-	Super::BeginPlay();
+	if (!TargetInventory)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("RequestCraftItem failed: TargetInventory is null"));
+		return;
+	}
 	
-	CachedInventory = GetOwner()->FindComponentByClass<UInventoryComponent>();
-
-	if (!CachedInventory)
-	{
-		UE_LOG(LogTemp, Error, TEXT("인벤토리 컴포넌트를 찾을 수 없습니다!"));
-	}
-}
-
-void UCraftingComponent::RequestCraftItem(FName TargetName)
-{
 	UCraftingSystem* CraftingSystem = GetWorld()->GetGameInstance()->GetSubsystem<UCraftingSystem>();
-	if (CraftingSystem && CachedInventory)
+	if (CraftingSystem)
 	{
-		CraftingSystem->CraftItem(TargetName, CachedInventory);
+		CraftingSystem->CraftItem(TargetName, TargetInventory);
 	}
 }
-

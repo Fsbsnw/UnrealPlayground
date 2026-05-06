@@ -18,15 +18,10 @@ class LOST_API UCraftingComponent : public UActorComponent
 	UCraftingComponent();
 	
 protected:
-	virtual void BeginPlay() override;
-
-	UPROPERTY()
-	TObjectPtr<UInventoryComponent> CachedInventory;
-
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta=(RowType = ItemCraftData))
 	TArray<FDataTableRowHandle> CraftingItemRecipes;
 
 public:
 	UFUNCTION(BlueprintCallable)
-	void RequestCraftItem(FName TargetName);
+	void RequestCraftItem(FName TargetName, UInventoryComponent* TargetInventory);
 };

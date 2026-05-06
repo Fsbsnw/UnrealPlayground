@@ -20,18 +20,22 @@ void ULostUserWidget::AddChildWidget(ULostUserWidget* Child)
 	}
 }
 
+// 본인 포함 자식들 제거
 void ULostUserWidget::CloseWidgetAndChildren()
 {
+	// 부모 위젯이 있는 경우
 	if (ParentWidget)
 	{
 		ParentWidget->ChildWidgets.Remove(this);
 		ParentWidget = nullptr;
 	}
-	
+
+	// 자식 위젯이 있는 경우
 	for (ULostUserWidget* Child : ChildWidgets)
 	{
 		if (IsValid(Child))
 		{
+			// 재귀적 파괴
 			Child->CloseWidgetAndChildren();
 		}
 	}
@@ -39,6 +43,7 @@ void ULostUserWidget::CloseWidgetAndChildren()
 	RemoveFromParent();
 }
 
+// 본인 제외 자식들 제거
 void ULostUserWidget::ClearAllChildren()
 {
 	// 역순으로 자식들 파괴

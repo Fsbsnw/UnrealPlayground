@@ -28,8 +28,9 @@ void UCraftingSystem::CraftItem(FName TargetName, UInventoryComponent* Inventory
 	{
 		bool bFoundRequiredItem = false;
 		FItemBaseData* RequiredItem = RowHandle.DataTable->FindRow<FItemBaseData>(RowHandle.RowName, TEXT(""));
-
-		int32 AmountStillNeeded = 1;
+		
+		int32 AmountStillNeeded = 1; // 임시로 필요 개수 하나로 제한
+		
 		// 필요 아이템마다 인벤토리 탐색
 		for (int32 i = 0; i < InventoryComponent->Inventory.Num(); ++i)
 		{

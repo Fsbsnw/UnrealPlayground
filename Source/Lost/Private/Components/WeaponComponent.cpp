@@ -15,10 +15,10 @@ UWeaponComponent::UWeaponComponent()
 
 void UWeaponComponent::SetWeapon(int32 Level)
 {
-	ULostGameInstance* LostGameModeBase = Cast<ULostGameInstance>(GetWorld()->GetGameInstance());
-	if (!LostGameModeBase) return;
+	ULostGameInstance* LostGameInstance = Cast<ULostGameInstance>(GetWorld()->GetGameInstance());
+	if (!LostGameInstance) return;
 	
-	UPlayerWeaponAsset* PWA = LostGameModeBase->PlayerWeaponAsset;
+	UPlayerWeaponAsset* PWA = LostGameInstance->PlayerWeaponAsset;
 	if (PWA == nullptr) return;
 	
 	FPlayerWeapon PlayerWeapon = PWA->GetWeaponByLevel(Level);

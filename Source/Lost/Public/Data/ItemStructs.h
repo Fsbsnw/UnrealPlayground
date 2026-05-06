@@ -7,6 +7,8 @@
 
 struct FDataTableRowHandle;
 
+// Item Name -> Primary Key + Foreign Key 느낌
+
 USTRUCT(BlueprintType)
 struct FItem : public FTableRowBase
 {

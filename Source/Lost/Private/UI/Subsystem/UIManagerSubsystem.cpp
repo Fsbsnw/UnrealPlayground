@@ -59,9 +59,11 @@ void UUIManagerSubsystem::OnToggleRequested(FGameplayTag InputTag)
 
 void UUIManagerSubsystem::ToggleWidget(FGameplayTag Tag)
 {
+	// 이미 활성화된 위젯인 경우
 	if (ULostUserWidget** FoundWidget = ActiveWidgets.Find(Tag))
 	{
 		ULostUserWidget* Widget = *FoundWidget;
+		// 이미 위젯이 뷰포트에 보이고 있는 경우 -> 비활성화
 		if (Widget->IsVisible())
 		{
 			const EWidgetCachePolicy Policy = ConfigData[Tag].CachePolicy;
@@ -71,20 +73,20 @@ void UUIManagerSubsystem::ToggleWidget(FGameplayTag Tag)
 				Widget->CloseWidgetAndChildren();
 				ActiveWidgets.Remove(Tag);
 			}
-			// 자주 사용하는 위젯의 경우 캐싱
+			// 자주 사용하는 위젯의 경우 캐싱 O
 			else
 			{
 				Widget->SetVisibility(ESlateVisibility::Collapsed);
 				Widget->ClearAllChildren();
 			}
 		}
-		// 캐싱된 위젯은 다시 보여주기
+		// 위젯이 뷰포트에 보이지 않고 있는 경우 -> 캐싱된 위젯은 다시 보여주기
 		else
 		{
 			Widget->SetVisibility(ESlateVisibility::Visible);
 		}
 	}
-	// 처음 위젯을 사용하는 경우
+	// 처음 위젯을 호출하는 경우
 	else
 	{
 		OpenWidget(Tag);
@@ -101,12 +103,15 @@ void UUIManagerSubsystem::OpenWidget(FGameplayTag Tag)
 	APlayerController* PC = GetWorld()->GetFirstPlayerController();
 	if (!PC || !PC->IsLocalController()) return;
 
+	// 위젯 생성
 	UUserWidget* BaseWidget = CreateWidget<UUserWidget>(PC, ConfigData[Tag].WidgetClass);
 	if (BaseWidget == nullptr) return;
-	
+
+	// 캐스팅
 	ULostUserWidget* Widget = Cast<ULostUserWidget>(BaseWidget);
 	if (Widget == nullptr) return;
 
+	// 위젯 기본 세팅
 	if (ConfigData[Tag].WidgetControllerClass != nullptr)
 	{
 		ULostWidgetController* WidgetController = NewObject<ULostWidgetController>(PC, ConfigData[Tag].WidgetControllerClass);
