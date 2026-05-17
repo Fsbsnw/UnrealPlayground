@@ -27,14 +27,14 @@ void ALostPlayerController::BeginPlay()
 
 void ALostPlayerController::InitializeHUD()
 {
+	// GameState에서 설정 로드
+	ALostGameState* GS = GetWorld()->GetGameState<ALostGameState>();
 	ALostPlayerState* LPS = GetPlayerState<ALostPlayerState>();
 	UAbilitySystemComponent* ASC = LPS->GetAbilitySystemComponent();
 	UAttributeSet* AS = LPS->GetAttributeSet();
 
 	if (ALostHUD* LostHUD = Cast<ALostHUD>(GetHUD()))
 	{
-		// GameState에서 설정 로드
-		ALostGameState* GS = GetWorld()->GetGameState<ALostGameState>();
 		FUIConfigData ConfigData = GS->UIConfigDataAsset ? GS->UIConfigDataAsset->UIConfigData : FUIConfigData();
 
 		// Overlay 초기화
@@ -72,6 +72,7 @@ void ALostPlayerController::SetupInputComponent()
 void ALostPlayerController::OnMoveInput(const FInputActionValue& Value)
 {
 	APawn* ControlledPawn = GetPawn();
+	if (!ControlledPawn) return;
 
 	const FVector2D Input = Value.Get<FVector2D>();
 	if (Input.IsNearlyZero()) return;

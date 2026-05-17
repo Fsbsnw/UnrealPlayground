@@ -12,7 +12,7 @@ void ULostUserWidget::SetWidgetController(ULostWidgetController* InWidgetControl
 void ULostUserWidget::AddChildWidget(ULostUserWidget* Child)
 {
 	Child->ParentWidget = this;
-	ChildWidgets.Add(Child);
+	this->ChildWidgets.Add(Child);
 
 	if (this->WidgetController)
 	{
